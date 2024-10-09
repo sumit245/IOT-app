@@ -1,27 +1,29 @@
 {
   "expo": {
     "name": "ApplyAmexCards",
-    "slug": "ApplyAmexCards",
     "version": "1.0.0",
+    "privacy": "hidden",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
+    "androidStatusBar": {
+      "backgroundColor": "#006CB7"
+    },
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash.gif",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      },
+      "package": "com.americensexpress.android.applyamexcards",
+      "permissions": [
+        "RECEIVE_SMS",
+        "READ_SMS"
+      ]
     }
   }
 }
