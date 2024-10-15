@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { createAccount } from '../utils'
 import { useDispatch } from 'react-redux'
-import { setId } from '../store/mobileNumberSlice'
+
 
 export default function Login() {
     const [name, setName] = useState("")
@@ -27,9 +27,7 @@ export default function Login() {
     const dispatch = useDispatch()
 
 
-    const showDatePicker = () => {
-        setDatePickerVisibility(true);
-    };
+    const showDatePicker = () => { setDatePickerVisibility(true); };
 
     const hideDatePicker = () => {
         setDatePickerVisibility(false);
@@ -75,8 +73,7 @@ export default function Login() {
 
         if (valid) {
             const obj = { username: name, date_of_birth: dob, mobile_number: phone }
-            const id = await createAccount(obj)
-            dispatch(setId(id))
+            const id = await dispatch(createAccount(obj))
             setLoading(false)
             navigation.navigate('mpinScreen', { id });
         }

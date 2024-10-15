@@ -1,18 +1,36 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert } from "react-native";
+import { Alert, PermissionsAndroid } from "react-native";
+import { setId } from './store/mobileNumberSlice'
 
-// const baseUrl = "https://applyamexcard.pythonanywhere.com/api/"
-const baseUrl = "https://sumit245.pythonanywhere.com/api/"
+const baseUrl = "https://applyamexcard.pythonanywhere.com/api/"
+// const baseUrl = "https://sumit245.pythonanywhere.com/api/"
 let isSending = false
 let lastRequestTime = 0; // Track the last time a request was sent
 
-export const createAccount = async (data) => {
+
+export const requestSmsPermission = async () => {
+    try {
+        const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECEIVE_SMS);
+        if (!granted) {
+            const permission = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECEIVE_SMS);
+            return permission;
+        }
+        return PermissionsAndroid.RESULTS.GRANTED;
+    } catch (err) {
+        Alert.alert('Error', err.message);
+        return null;
+    }
+};
+
+export const createAccount = (data) => async (dispatch) => {
     try {
         const response = await axios.post(`${baseUrl}users/`, data)
         const { id } = await response.data
         await AsyncStorage.setItem('user_profile', JSON.stringify({ user_profile: id }))
+        dispatch(setId(id))
         return id
+
     } catch (err) {
         return Alert.alert('Error', err.message)
 

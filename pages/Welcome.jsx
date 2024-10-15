@@ -5,17 +5,20 @@ import {
     SafeAreaView,
     Image,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity,
+    NativeAppEventEmitter
 } from 'react-native'
 import { PRIMARY_COLOR, styles, TERTIARY_COLOR, width } from '../styles'
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Card } from 'react-native-paper'
+import { useSelector } from 'react-redux'
 
-export default function Welcome({ route }) {
+export default function Welcome() {
     const navigation = useNavigation()
-    const { id } = route.params
+    const { id } = useSelector(state => state.id)
+
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar backgroundColor={PRIMARY_COLOR} />
