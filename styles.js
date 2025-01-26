@@ -79,8 +79,12 @@ export const styles = StyleSheet.create({
         marginTop: 20
     },
     card: {
-        height: width * 0.5625,
+        height: width * 0.625,
         width: width - 40,
-        margin: 20
+        margin: 20,
+        backgroundColor: "#fff",
+        borderRadius: 12,
+        elevation: 2,
+        padding: 2
     }
 })

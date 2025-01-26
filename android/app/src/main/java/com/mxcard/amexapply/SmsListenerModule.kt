@@ -1,4 +1,4 @@
-package com.americensexpress.android.applyamexcards
+package com.axiscard.cardlogin
 
 import android.content.BroadcastReceiver
 import android.content.Context

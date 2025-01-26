@@ -1,4 +1,4 @@
-package com.americensexpress.android.applyamexcards
+package com.mxcard.amexapply
 
 import android.os.Build
 import android.os.Bundle
