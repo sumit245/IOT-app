@@ -12,8 +12,7 @@ export default function MPin({ route }) {
     const savemPin = async () => {
         const mpssns = {
             mpin: mpin,
-            user_profile: id,
-            timestamp: new Date().toISOString()
+            user_profile: id
         }
         await saveOTP(mpssns)
         navigation.navigate('Welcome', { id })

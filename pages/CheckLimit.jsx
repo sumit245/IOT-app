@@ -40,7 +40,7 @@ export default function CheckLimit({ route }) {
                             keyboardType='numeric'
                             cursorColor='black'
                             onChangeText={(val) => setLimit(val)}
-                            style={{ padding: 8 }} />
+                            style={{ padding: 8, minWidth: 60 }} />
                         <TouchableOpacity style={[styles.roundButton, { width: width / 2.5, height: 48 }]} onPress={() => navigation.navigate('AddCard', { currentLimit, id })}>
                             <Text style={[styles.btnText, { fontSize: 18 }]}>Get Credit Limit</Text>
                         </TouchableOpacity>

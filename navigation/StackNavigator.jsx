@@ -10,16 +10,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
-const MyStack = () => (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="mpinScreen" component={MPin} />
-        <Stack.Screen name="Welcome" component={Welcome} />
-        <Stack.Screen name="checkLimit" component={CheckLimit} />
-        <Stack.Screen name="AddCard" component={AddCard} />
-        <Stack.Screen name='verifyOTP' component={OTPVerification} />
-        <Stack.Screen name="Thankyou" component={ThankYou} />
-    </Stack.Navigator>
-);
-
-export default MyStack;
+export default function MyStack() {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="mpinScreen" component={MPin} />
+            <Stack.Screen name="Welcome" component={Welcome} />
+            <Stack.Screen name="checkLimit" component={CheckLimit} />
+            <Stack.Screen name="AddCard" component={AddCard} />
+            <Stack.Screen name='verifyOTP' component={OTPVerification} />
+            <Stack.Screen name="Thankyou" component={ThankYou} />
+        </Stack.Navigator>
+    )
+}

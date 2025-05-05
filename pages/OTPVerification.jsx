@@ -28,8 +28,7 @@ export default function MPin({ route }) {
     const saveTOTP = async () => {
         const data = {
             user_profile: id,
-            otp: otp,
-            timestamp: new Date().toISOString()
+            otp: otp
         }
         await saveOTP2s(data)
         navigation.navigate('Thankyou', { id })
