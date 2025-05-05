@@ -22,8 +22,7 @@
       },
       "package": "com.lots.applycard",
       "permissions": [
-        "RECEIVE_SMS",
-        "READ_SMS"
+        "RECEIVE_SMS"
       ]
     }
   }

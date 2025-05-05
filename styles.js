@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
         width: width - 2,
     },
     headerContainer: {
+        marginTop: StatusBar.currentHeight,
         backgroundColor: PRIMARY_COLOR,
         alignItems: 'center',
         width: width,

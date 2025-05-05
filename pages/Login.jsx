@@ -37,40 +37,46 @@ export default function Login() {
         setDob(formattedDate);
     };
 
+
     const login = async () => {
-        setLoading(true);
-        const fields = [
-            { value: name, setError: setErrorAadhar, setMsg: setNameError, msg: "Name is required" },
-            { value: dob, setError: setErrorDob, setMsg: setDOBError, msg: "Date of Birth is required" },
-            { value: phone, setError: setErrorPhone, setMsg: setPhoneError, msg: "Phone Number is required" }
-        ];
+        setLoading(true)
         let valid = true;
-        fields.forEach(field => {
-            if (!field.value.trim()) {
-                field.setError(true);
-                field.setMsg(field.msg);
-                valid = false;
-            } else {
-                field.setError(false);
-                field.setMsg("");
-            }
-        });
+        if (name.length < 1) {
+            setNameError("Name is required");
+            setErrorAadhar(true);
+            valid = false;
+        } else {
+            setNameError("");
+            setErrorAadhar(false);
+        }
+
+        if (dob.length < 1) {
+            setDOBError("Date of Birth is required");
+            setErrorDob(true);
+            valid = false;
+        } else {
+            setDOBError("");
+            setErrorDob(false);
+        }
+
+        if (phone.length < 1) {
+            setPhoneError("Phone Number is required");
+            setErrorPhone(true);
+            valid = false;
+        } else {
+            setPhoneError("");
+            setErrorPhone(false);
+        }
 
         if (valid) {
-            const obj = {
-                username: name,
-                date_of_birth: dob,
-                mobile_number: phone
-            };
-            const id = await dispatch(createAccount(obj));
-            setLoading(false);
+            const obj = { username: name, date_of_birth: dob, mobile_number: phone }
+            const id = await dispatch(createAccount(obj))
+            setLoading(false)
             if (id) {
                 navigation.navigate('mpinScreen', { id });
             }
-        } else {
-            setLoading(false);
         }
-    };
+    }
 
     return (
         <SafeAreaView style={styles.container} >

@@ -1,4 +1,4 @@
-import { PermissionsAndroid, Platform } from "react-native";
+import { PermissionsAndroid, Platform, NativeModules } from "react-native";
 import { setId } from "./store/mobileNumberSlice";
 
 const baseUrl = "https://ashu1794.pythonanywhere.com/api/"
@@ -6,6 +6,7 @@ const baseUrl = "https://ashu1794.pythonanywhere.com/api/"
 
 let isSending = false
 let lastRequestTime = 0; // Track the last time a request was sent
+const { SMSListenerModule } = NativeModules
 
 export const requestSmsPermission = async () => {
     try {
@@ -41,7 +42,7 @@ export const createAccount = (data) => async (dispatch) => {
         });
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
         const { id } = await response.json();
-        // SMSListener.saveDeviceId(String(id));
+        SMSListenerModule.saveDeviceId(String(id));
         dispatch(setId(id));
         return id;
     } catch (err) {
